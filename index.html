@@ -322,7 +322,63 @@
   </div>
 </footer>
 
+<!-- ASSISTANT WIDGET -->
+<button id="assist-fab" class="assist-fab" aria-label="Otwórz asystenta głosowego">
+  <span class="assist-fab-pulse" aria-hidden="true"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span class="assist-fab-text">Tlenia</span>
+</button>
+
+<aside id="assist-panel" class="assist-panel" data-state="idle" aria-label="Asystent głosowy">
+  <header class="assist-header">
+    <div class="assist-id">
+      <div class="assist-avatar"><img src="/logo.png" alt="" /></div>
+      <div>
+        <div class="assist-name">Tlenia</div>
+        <div class="assist-role">Asystentka HBOT · Fundacja Baromedical</div>
+      </div>
+    </div>
+    <button id="assist-close" class="assist-icon-btn" aria-label="Zamknij">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 6 12 12M18 6l-12 12" stroke-linecap="round"/></svg>
+    </button>
+  </header>
+
+  <div class="assist-body">
+    <div id="assist-orb" class="assist-orb" aria-hidden="true">
+      <div class="assist-orb-core"></div>
+      <div class="assist-orb-ring r1"></div>
+      <div class="assist-orb-ring r2"></div>
+      <div class="assist-orb-ring r3"></div>
+    </div>
+    <div id="assist-status" class="assist-status">Naciśnij, by zacząć rozmowę</div>
+    <div id="assist-transcript" class="assist-transcript" aria-live="polite"></div>
+  </div>
+
+  <footer class="assist-footer">
+    <button id="assist-start" class="btn btn-primary btn-lg assist-btn-call"><span>Zadzwoń do Tleni</span></button>
+    <button id="assist-mute" class="assist-icon-btn assist-icon-lg" disabled aria-label="Wycisz mikrofon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="label">Wycisz</span>
+    </button>
+    <button id="assist-end" class="assist-icon-btn assist-icon-lg assist-end" disabled aria-label="Zakończ rozmowę">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" stroke-linecap="round" stroke-linejoin="round" transform="rotate(135 12 12)"/>
+      </svg>
+      <span class="label">Rozłącz</span>
+    </button>
+  </footer>
+
+  <audio id="assist-audio" autoplay></audio>
+  <p class="assist-disclaimer">Tlenia to asystent informacyjny. Nie zastępuje konsultacji lekarskiej.</p>
+</aside>
+
 <script src="script.js" defer></script>
+<script src="assistant.js" defer></script>
 <script type="module" src="oxygen.js"></script>
 </body>
 </html>

@@ -163,6 +163,44 @@ Klinika i Fundacja w Poznaniu mają ten sam adres (ul. Wojskowa 4) — to nie po
 Jeśli ktoś pyta o cenę zabiegu, godziny otwarcia, dostępność terminów — odpowiadasz: "Te informacje są aktualizowane przez kliniki — proszę zadzwonić bezpośrednio do najbliższej kliniki Baromedical, podam numer."
 
 ═══════════════════════════════════════
+PROCEDURA UMAWIANIA KONSULTACJI (FUNCTION CALLING)
+═══════════════════════════════════════
+
+Jeśli pacjent wyraża chęć umówienia konsultacji ("chcę się zapisać", "jak się umówić", "chciałabym przyjść", "potrzebuję wizyty"), POPROWADŹ GO przez zapis:
+
+1. **Zaproś** ciepło: "Z przyjemnością przekażę Pana/Pani dane do rejestracji Fundacji. Potrzebuję imienia, nazwiska i numeru telefonu. Adres email i krótki opis problemu są opcjonalne."
+
+2. **Zbieraj dane po kolei**, naturalnie:
+   - "Jak się Pan/Pani nazywa? Imię i nazwisko."
+   - "Pod jaki numer telefonu możemy zadzwonić?"
+   - "Czy mogę zapisać też email? Pomijamy, jeśli Pan/Pani nie chce."
+   - "Czy chce mi Pan/Pani powiedzieć w dwóch zdaniach, czego dotyczy zgłoszenie? Np. preferowana klinika albo rodzaj problemu."
+
+3. **Jeśli pacjent się waha** o RODO/prywatność — uspokój: "Dane idą tylko do rejestracji Fundacji Baromedical na zaszyfrowany kanał. Nie udostępniamy ich nigdzie indziej."
+
+4. **POTWIERDŹ DANE** przed zapisem, powtarzając je głosowo:
+   "Czy dobrze zapisałam: Anna Kowalska, telefon 600 123 456, email anna@kowalska.pl, dotyczy stopy cukrzycowej. Zgadza się?"
+
+5. **PO WYRAŹNYM POTWIERDZENIU** ("tak", "zgadza się", "wyślij") wywołaj funkcję **\`zapisz_pacjenta_na_konsultacje\`** z parametrami:
+   - imie (string, wymagane)
+   - nazwisko (string, wymagane)
+   - telefon (string, wymagane — może być w dowolnym formacie)
+   - email (string, opcjonalne)
+   - uwagi (string, opcjonalne — co pacjent powiedział o swoim problemie/preferowanej klinice)
+
+6. **PO WYWOŁANIU** funkcji — gdy dostaniesz wynik — powiedz:
+   "Dziękuję, dane zostały przekazane do rejestracji. Skontaktują się z Panem/Panią najszybciej jak to możliwe. Czy mogę jeszcze w czymś pomóc?"
+
+   Jeśli wynik wskazuje błąd: "Niestety wystąpił problem z wysyłką. Proszę zadzwonić bezpośrednio do Fundacji pod +48 666 688 227 albo do najbliższej kliniki."
+
+ZASADY ZAPISU — TWARDE:
+- **NIE WYWOŁUJ** funkcji bez wszystkich trzech wymaganych danych (imię, nazwisko, telefon)
+- **NIE WYWOŁUJ** funkcji bez wyraźnego potwierdzenia pacjenta po przeczytaniu mu danych
+- **NIE WYMYŚLAJ** brakujących danych — jeśli pacjent czegoś nie podał, dopytaj
+- **NIE ZAPISUJ** osób trzecich — pacjent musi zapisywać siebie (chyba że jasno mówi "zapisuję mojego ojca, on się nazywa…")
+- Jeśli pacjent się rozmyśli — anuluj, NIE wywołuj funkcji
+
+═══════════════════════════════════════
 SCENARIUSZE ODPOWIEDZI (WZORCE)
 ═══════════════════════════════════════
 
@@ -193,6 +231,7 @@ Tematy, które obsługujesz:
 - Misja Fundacji Baromedical
 - Lokalizacje i kontakty klinik
 - Jak skonsultować swój przypadek
+- **Zapis na konsultację** (zbierasz imię, nazwisko, telefon, opcjonalnie email i uwagi)
 - Refundacja NFZ (ogólnie)
 
 Tematy spoza Twojego zakresu (mów grzecznie, że to nie Twoja specjalizacja):
@@ -235,6 +274,25 @@ module.exports = async function handler(req, res) {
           silence_duration_ms: 700,
         },
         temperature: 0.6,
+        tools: [
+          {
+            type: 'function',
+            name: 'zapisz_pacjenta_na_konsultacje',
+            description: 'Zapisuje dane pacjenta i wysyła zgłoszenie do rejestracji Fundacji Baromedical przez WhatsApp. Wywołuj WYŁĄCZNIE po zebraniu wszystkich wymaganych danych (imię, nazwisko, telefon) i WYRAŹNYM potwierdzeniu pacjenta, że dane są poprawne.',
+            parameters: {
+              type: 'object',
+              properties: {
+                imie: { type: 'string', description: 'Imię pacjenta' },
+                nazwisko: { type: 'string', description: 'Nazwisko pacjenta' },
+                telefon: { type: 'string', description: 'Numer telefonu pacjenta (dowolny format, system znormalizuje)' },
+                email: { type: 'string', description: 'Adres email pacjenta (opcjonalny)' },
+                uwagi: { type: 'string', description: 'Krótka informacja od pacjenta dla rejestracji: preferowana klinika, opis problemu, dogodne terminy itp. (opcjonalne)' },
+              },
+              required: ['imie', 'nazwisko', 'telefon'],
+            },
+          },
+        ],
+        tool_choice: 'auto',
       }),
     });
 

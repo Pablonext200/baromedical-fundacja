@@ -160,6 +160,13 @@
     } else if (ev.type === 'response.done') {
       setStatus('Słucham…', 'listening');
       finalize('ai');
+      // Tool call may arrive inside response.output items
+      const out = ev.response && ev.response.output;
+      if (Array.isArray(out)) {
+        out.forEach((item) => {
+          if (item.type === 'function_call') handleToolCall(item);
+        });
+      }
     } else if (ev.type === 'input_audio_buffer.speech_started') {
       setStatus('Słyszę cię…', 'listening');
     } else if (ev.type === 'input_audio_buffer.speech_stopped') {
@@ -167,6 +174,81 @@
     } else if (ev.type === 'error') {
       setStatus('Błąd: ' + (ev.error?.message || 'nieznany'), 'error');
       console.error(ev);
+    }
+  }
+
+  async function handleToolCall(item) {
+    if (item.name !== 'zapisz_pacjenta_na_konsultacje') return;
+    let args = {};
+    try { args = JSON.parse(item.arguments || '{}'); } catch {}
+
+    showBookingBanner({ state: 'sending', data: args });
+
+    let result = { ok: false };
+    try {
+      const r = await fetch('/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(args),
+      });
+      result = await r.json();
+    } catch (e) {
+      result = { ok: false, error: String(e) };
+    }
+
+    if (result.ok && !result.waSent && result.waLink) {
+      try { window.open(result.waLink, '_blank', 'noopener'); } catch {}
+    }
+
+    showBookingBanner({
+      state: result.ok ? 'sent' : 'error',
+      data: args,
+      waSent: !!result.waSent,
+      waLink: result.waLink,
+    });
+
+    // Send result back to model
+    try {
+      dc.send(JSON.stringify({
+        type: 'conversation.item.create',
+        item: {
+          type: 'function_call_output',
+          call_id: item.call_id,
+          output: JSON.stringify({
+            ok: !!result.ok,
+            wyslano_whatsapp: !!result.waSent,
+            link_zapasowy: result.waLink || null,
+            blad: result.error || null,
+          }),
+        },
+      }));
+      dc.send(JSON.stringify({ type: 'response.create' }));
+    } catch (e) {
+      console.error('tool result send', e);
+    }
+  }
+
+  function showBookingBanner({ state, data, waSent, waLink }) {
+    let el = document.getElementById('assist-booking');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'assist-booking';
+      el.className = 'assist-booking';
+      transcript.parentElement.insertBefore(el, transcript);
+    }
+    const close = '<button class="assist-booking-x" aria-label="Zamknij" onclick="this.parentElement.remove()">×</button>';
+    if (state === 'sending') {
+      el.dataset.state = 'sending';
+      el.innerHTML = `<div class="assist-booking-row"><span class="dot"></span><strong>Wysyłam zgłoszenie…</strong> <span class="muted">${data.imie || ''} ${data.nazwisko || ''}</span></div>${close}`;
+    } else if (state === 'sent') {
+      el.dataset.state = 'sent';
+      const auto = waSent
+        ? '<span class="muted">WhatsApp wysłany automatycznie do rejestracji.</span>'
+        : `<span class="muted">Otwarto WhatsApp z gotową wiadomością — kliknij <strong>Wyślij</strong>.</span>${waLink ? ` <a href="${waLink}" target="_blank" rel="noopener">Otwórz ponownie ↗</a>` : ''}`;
+      el.innerHTML = `<div class="assist-booking-row"><span class="dot ok"></span><strong>Zgłoszenie zapisane</strong></div><div class="assist-booking-meta">${data.imie} ${data.nazwisko} · ${data.telefon}${data.email ? ' · ' + data.email : ''}</div><div class="assist-booking-meta">${auto}</div>${close}`;
+    } else {
+      el.dataset.state = 'error';
+      el.innerHTML = `<div class="assist-booking-row"><span class="dot err"></span><strong>Nie udało się wysłać</strong></div><div class="assist-booking-meta">Proszę zadzwonić: <a href="tel:+48666688227">+48 666 688 227</a></div>${close}`;
     }
   }
 

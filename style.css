@@ -969,6 +969,54 @@ p { margin: 0 0 1em; }
   box-shadow: 0 4px 14px rgba(0,184,212,0.08);
 }
 
+.assist-booking {
+  position: relative;
+  width: 100%; max-width: 600px;
+  margin: 0 auto 20px;
+  padding: 14px 44px 14px 18px;
+  border-radius: 14px;
+  background: white;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 4px 20px rgba(10,35,66,0.08);
+  text-align: left;
+  font-size: 13px;
+  animation: t-in .35s cubic-bezier(.2,.8,.2,1);
+}
+.assist-booking[data-state="sending"] { border-color: var(--turquoise-deep); background: rgba(93,217,236,0.08); }
+.assist-booking[data-state="sent"] { border-color: #00c853; background: rgba(0,200,83,0.06); }
+.assist-booking[data-state="error"] { border-color: var(--accent); background: rgba(255,74,28,0.06); }
+.assist-booking-row {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px;
+}
+.assist-booking-row .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--turquoise-deep);
+  box-shadow: 0 0 8px var(--turquoise-deep);
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+.assist-booking-row .dot.ok { background: #00c853; box-shadow: 0 0 8px #00c853; animation: none; }
+.assist-booking-row .dot.err { background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: none; }
+.assist-booking-meta {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  font-family: 'Geist Mono', monospace;
+  letter-spacing: 0.02em;
+}
+.assist-booking-meta a { color: var(--turquoise-deep); border-bottom: 1px dashed currentColor; }
+.assist-booking-meta a:hover { color: var(--accent); }
+.assist-booking-meta strong { color: var(--ink); }
+.assist-booking-meta .muted { color: var(--muted); }
+.assist-booking-x {
+  position: absolute; top: 8px; right: 10px;
+  width: 24px; height: 24px; border-radius: 50%;
+  border: none; background: transparent; cursor: pointer;
+  color: var(--muted); font-size: 18px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.assist-booking-x:hover { background: var(--bg); color: var(--ink); }
+
 .assist-disclaimer-big {
   margin: 0; max-width: 480px; margin: 0 auto;
   font-family: 'Geist Mono', monospace;

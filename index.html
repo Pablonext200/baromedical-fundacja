@@ -8,17 +8,31 @@
 <meta property="og:title" content="Fundacja Baromedical — Tlen dla życia" />
 <meta property="og:description" content="Tam gdzie lekarze mówią PASS, my mówimy SPRAWDZAM. Wesprzyj misję ratowania życia tlenem." />
 <meta property="og:type" content="website" />
+<meta name="theme-color" content="#f4f3ef" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%2300b8d4%22/><text y=%2270%22 x=%2250%22 text-anchor=%22middle%22 font-size=%2255%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>O₂</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%230a0a0a%22/><text y=%2268%22 x=%2250%22 text-anchor=%22middle%22 font-size=%2248%22 fill=%22%23ff4a1c%22 font-family=%22monospace%22>O₂</text></svg>">
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+<div class="spotlight" aria-hidden="true"></div>
+<div class="scroll-bar" aria-hidden="true"></div>
+
+<nav class="hud" aria-label="Sekcje">
+  <a href="#top" class="active">01 — Start</a>
+  <a href="#historia">02 — Historia</a>
+  <a href="#wizja">03 — Wizja</a>
+  <a href="#misja">04 — Misja</a>
+  <a href="#wsparcie">05 — Wsparcie</a>
+  <a href="#kontakt">06 — Kontakt</a>
+</nav>
+
 <nav class="nav">
   <div class="nav-inner">
     <a href="#top" class="logo">
-      <span class="logo-mark">O<sub>2</sub></span>
+      <span class="logo-mark"><span>O₂</span></span>
       <span class="logo-text">Baromedical</span>
     </a>
     <ul class="nav-links">
@@ -27,12 +41,13 @@
       <li><a href="#misja">Misja</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
     </ul>
-    <a href="#wsparcie" class="btn btn-primary nav-cta">Wesprzyj</a>
+    <a href="#wsparcie" class="btn btn-primary nav-cta"><span>Wesprzyj</span></a>
   </div>
 </nav>
 
 <header id="top" class="hero">
   <div class="hero-bg">
+    <div class="grid-overlay"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
@@ -49,24 +64,38 @@
       nie za późno.
     </p>
     <div class="hero-cta">
-      <a href="#wsparcie" class="btn btn-primary btn-lg">Wesprzyj fundację</a>
-      <a href="#konsultacja" class="btn btn-ghost btn-lg">Skonsultuj przypadek →</a>
+      <a href="#wsparcie" class="btn btn-primary btn-lg"><span>Wesprzyj fundację</span></a>
+      <a href="#konsultacja" class="btn btn-ghost btn-lg"><span>Skonsultuj przypadek <span class="arrow">→</span></span></a>
     </div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">darowizn na cele statutowe</span></div>
-      <div class="stat"><span class="stat-num">2019</span><span class="stat-label">rok założenia</span></div>
-      <div class="stat"><span class="stat-num">3h</span><span class="stat-label">tyle dawano życia pacjentowi „0”</span></div>
+      <div class="stat">
+        <span class="stat-num"><span data-counter="100" data-suffix="%">0%</span></span>
+        <span class="stat-label">Darowizn na cele statutowe</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num"><span data-counter="2019">0</span></span>
+        <span class="stat-label">Rok założenia</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num"><span data-counter="3" data-suffix="h">0h</span></span>
+        <span class="stat-label">Tyle dawano życia pacjentowi „0”</span>
+      </div>
     </div>
   </div>
-  <a href="#historia" class="scroll-cue" aria-label="Przewiń niżej">
-    <span></span>
-  </a>
+  <a href="#historia" class="scroll-cue" aria-label="Przewiń niżej">Scroll</a>
 </header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Tlen ratuje życie <span class="dot">●</span> Tlen ratuje życie <span class="dot">●</span> Tlen ratuje życie <span class="dot">●</span> Tlen ratuje życie <span class="dot">●</span></span>
+    <span>Tlen ratuje życie <span class="dot">●</span> Tlen ratuje życie <span class="dot">●</span> Tlen ratuje życie <span class="dot">●</span> Tlen ratuje życie <span class="dot">●</span></span>
+  </div>
+</div>
 
 <section id="historia" class="section section-story">
   <div class="container two-col">
     <div class="col-text">
-      <span class="section-tag">Historia</span>
+      <span class="section-tag">02 — Historia</span>
       <h2>Wszystko zaczęło się od jednego oddechu</h2>
       <p class="lead">
         1 maja 2019 roku. Pacjent z gangreną gazową. Antybiotyki zawiodły.
@@ -99,7 +128,7 @@
 
 <section id="wizja" class="section section-vision">
   <div class="container">
-    <span class="section-tag light">Wizja</span>
+    <span class="section-tag light">03 — Wizja</span>
     <h2 class="big-title">
       Świat, w którym tlen ratuje życie<br/>
       <span class="muted">wcześniej</span> — nie za późno.
@@ -114,13 +143,14 @@
 
 <section id="misja" class="section section-mission">
   <div class="container">
-    <span class="section-tag">Misja</span>
+    <span class="section-tag">04 — Misja</span>
     <h2>Tlen dla życia</h2>
     <p class="section-intro">Cztery filary, na których opiera się wszystko, co robimy.</p>
     <div class="grid">
       <article class="card">
+        <span class="card-num">01</span>
         <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
             <path d="M12 21s-8-5.5-8-12a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-8 12-8 12z" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
@@ -128,8 +158,9 @@
         <p>Otwieramy drzwi do terapii pacjentom, których nie stać na leczenie. Bo o życiu nie powinien decydować portfel.</p>
       </article>
       <article class="card">
+        <span class="card-num">02</span>
         <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
@@ -137,8 +168,9 @@
         <p>Lekarze i pacjenci. Konferencje, materiały, fakty — oparte wyłącznie o dowody naukowe (EBM).</p>
       </article>
       <article class="card">
+        <span class="card-num">03</span>
         <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
             <circle cx="12" cy="12" r="10"/>
             <path d="m9 12 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -147,8 +179,9 @@
         <p>Czas to życie i sprawność. Działamy zanim uszkodzenie stanie się trwałe.</p>
       </article>
       <article class="card">
+        <span class="card-num">04</span>
         <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
             <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
             <circle cx="12" cy="12" r="3"/>
           </svg>
@@ -164,15 +197,15 @@
   <div class="container">
     <div class="support-card">
       <div class="support-text">
-        <span class="section-tag light">Wsparcie</span>
+        <span class="section-tag light">05 — Wsparcie</span>
         <h2>Tlen kosztuje. Życie — bezcenne.</h2>
         <p>
           Każda wpłata to seria w komorze hiperbarycznej dla kogoś, kto sam
           by jej nie udźwignął. Dołącz do nas — w pojedynkę albo regularnie.
         </p>
         <div class="support-actions">
-          <a href="mailto:kontakt@baromedical.org?subject=Chc%C4%99%20wesprze%C4%87%20Fundacj%C4%99" class="btn btn-primary btn-lg">Chcę wesprzeć</a>
-          <a href="#kontakt" class="btn btn-ghost btn-lg">Porozmawiajmy</a>
+          <a href="mailto:kontakt@baromedical.org?subject=Chc%C4%99%20wesprze%C4%87%20Fundacj%C4%99" class="btn btn-primary btn-lg"><span>Chcę wesprzeć</span></a>
+          <a href="#kontakt" class="btn btn-ghost btn-lg"><span>Porozmawiajmy <span class="arrow">→</span></span></a>
         </div>
       </div>
       <aside class="support-meta">
@@ -189,7 +222,7 @@
 
 <section id="konsultacja" class="section section-consult">
   <div class="container narrow">
-    <span class="section-tag">Konsultacja</span>
+    <span class="section-tag">06 — Konsultacja</span>
     <h2>Masz przypadek, w którym lekarze rozkładają ręce?</h2>
     <p>
       Skontaktuj się. Sprawdzimy, czy tlenoterapia hiperbaryczna może pomóc.
@@ -197,8 +230,8 @@
       doświadczenie.
     </p>
     <div class="consult-cta">
-      <a href="mailto:kontakt@baromedical.org?subject=Konsultacja%20przypadku" class="btn btn-primary btn-lg">Napisz do nas</a>
-      <a href="tel:+48666688227" class="btn btn-ghost btn-lg">+48 666 688 227</a>
+      <a href="mailto:kontakt@baromedical.org?subject=Konsultacja%20przypadku" class="btn btn-primary btn-lg"><span>Napisz do nas</span></a>
+      <a href="tel:+48666688227" class="btn btn-ghost btn-lg"><span>+48 666 688 227</span></a>
     </div>
   </div>
 </section>
@@ -207,7 +240,7 @@
   <div class="container footer-inner">
     <div>
       <a href="#top" class="logo logo-light">
-        <span class="logo-mark">O<sub>2</sub></span>
+        <span class="logo-mark"><span>O₂</span></span>
         <span class="logo-text">Baromedical</span>
       </a>
       <p class="footer-tag">Tlen dla życia.</p>
@@ -241,7 +274,7 @@
   </div>
   <div class="footer-bottom container">
     <span>© <span id="year"></span> Fundacja Baromedical</span>
-    <span class="footer-credit">Zbudowano z troską o życie.</span>
+    <span class="footer-credit">Zbudowano z troską o życie</span>
   </div>
 </footer>
 

@@ -115,7 +115,7 @@
     muteBtn.disabled = true;
     muted = false;
     muteBtn.classList.remove('muted');
-    if (panel.dataset.state !== 'error') setStatus('Naciśnij, by zacząć rozmowę', 'idle');
+    if (section.dataset.state !== 'error') setStatus('Kliknij, by rozpocząć rozmowę', 'idle');
   }
 
   function toggleMute() {

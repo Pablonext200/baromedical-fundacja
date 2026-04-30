@@ -12,8 +12,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%230a0a0a%22/><text y=%2268%22 x=%2250%22 text-anchor=%22middle%22 font-size=%2248%22 fill=%22%23ff4a1c%22 font-family=%22monospace%22>O₂</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%230a2342%22/><text y=%2268%22 x=%2250%22 text-anchor=%22middle%22 font-size=%2448%22 fill=%22%235dd9ec%22 font-family=%22monospace%22>O₂</text></svg>">
 <link rel="stylesheet" href="style.css" />
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.161.0/build/three.module.js" } }
+</script>
 </head>
 <body>
 
@@ -23,10 +26,11 @@
 <nav class="hud" aria-label="Sekcje">
   <a href="#top" class="active">01 — Start</a>
   <a href="#historia">02 — Historia</a>
-  <a href="#wizja">03 — Wizja</a>
-  <a href="#misja">04 — Misja</a>
-  <a href="#wsparcie">05 — Wsparcie</a>
-  <a href="#kontakt">06 — Kontakt</a>
+  <a href="#galeria">03 — Galeria</a>
+  <a href="#wizja">04 — Wizja</a>
+  <a href="#misja">05 — Misja</a>
+  <a href="#wsparcie">06 — Wsparcie</a>
+  <a href="#kontakt">07 — Kontakt</a>
 </nav>
 
 <nav class="nav">
@@ -47,6 +51,7 @@
 
 <header id="top" class="hero">
   <div class="hero-bg">
+    <canvas id="oxygen-canvas" class="oxygen-canvas" aria-hidden="true"></canvas>
     <div class="grid-overlay"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
@@ -122,6 +127,44 @@
         </p>
         <footer>— pacjent fundacji</footer>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="galeria" class="section section-gallery">
+  <div class="container">
+    <div class="gallery-head">
+      <div>
+        <span class="section-tag">Galeria</span>
+        <h2>Tlen, który leczy.</h2>
+      </div>
+      <p>Hiperbaria, medycyna, nadzieja — fragmenty pracy, którą wspólnie wykonujemy.</p>
+    </div>
+    <div class="gallery-grid">
+      <a class="gallery-item gi-1" href="#wsparcie">
+        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1400&q=80&auto=format&fit=crop" alt="Komora hiperbaryczna" loading="lazy" />
+        <span class="caption">Komora HBOT</span>
+      </a>
+      <a class="gallery-item gi-2" href="#wsparcie">
+        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&q=80&auto=format&fit=crop" alt="Lekarz" loading="lazy" />
+        <span class="caption">Diagnostyka</span>
+      </a>
+      <a class="gallery-item gi-3" href="#misja">
+        <img src="https://images.unsplash.com/photo-1505820013142-f86a3439c5b2?w=1200&q=80&auto=format&fit=crop" alt="Tlen i woda" loading="lazy" />
+        <span class="caption">Tlen / Życie</span>
+      </a>
+      <a class="gallery-item gi-4" href="#historia">
+        <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=1000&q=80&auto=format&fit=crop" alt="Pacjent" loading="lazy" />
+        <span class="caption">Pacjent</span>
+      </a>
+      <a class="gallery-item gi-5" href="#misja">
+        <img src="https://images.unsplash.com/photo-1666214280391-8ff5bd3c0bf0?w=1000&q=80&auto=format&fit=crop" alt="Zespół medyczny" loading="lazy" />
+        <span class="caption">Zespół</span>
+      </a>
+      <a class="gallery-item gi-6" href="#konsultacja">
+        <img src="https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=1000&q=80&auto=format&fit=crop" alt="Konsultacja" loading="lazy" />
+        <span class="caption">Konsultacja</span>
+      </a>
     </div>
   </div>
 </section>
@@ -279,5 +322,6 @@
 </footer>
 
 <script src="script.js" defer></script>
+<script type="module" src="oxygen.js"></script>
 </body>
 </html>

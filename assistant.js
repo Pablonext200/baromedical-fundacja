@@ -1,7 +1,5 @@
 (function () {
-  const fab = document.getElementById('assist-fab');
-  const panel = document.getElementById('assist-panel');
-  const closeBtn = document.getElementById('assist-close');
+  const section = document.getElementById('asystent');
   const startBtn = document.getElementById('assist-start');
   const endBtn = document.getElementById('assist-end');
   const muteBtn = document.getElementById('assist-mute');
@@ -9,7 +7,7 @@
   const orb = document.getElementById('assist-orb');
   const transcript = document.getElementById('assist-transcript');
   const audioEl = document.getElementById('assist-audio');
-  if (!fab) return;
+  if (!section || !startBtn) return;
 
   let pc = null;
   let dc = null;
@@ -19,15 +17,9 @@
   let micTrack = null;
   let muted = false;
 
-  function open() { panel.classList.add('open'); fab.classList.add('hidden'); }
-  function close() { panel.classList.remove('open'); fab.classList.remove('hidden'); endCall(); }
-
-  fab.addEventListener('click', open);
-  closeBtn.addEventListener('click', close);
-
   function setStatus(text, state) {
     status.textContent = text;
-    panel.dataset.state = state || '';
+    section.dataset.state = state || '';
   }
 
   function appendTranscript(role, text) {

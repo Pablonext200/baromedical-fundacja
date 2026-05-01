@@ -25,8 +25,8 @@
 <div class="scroll-bar" aria-hidden="true"></div>
 
 <nav class="hud" aria-label="Sekcje">
-  <a href="#top" class="active">01 — Start</a>
-  <a href="#asystent">02 — Tlenia</a>
+  <a href="#asystent" class="active">01 — Tlenia</a>
+  <a href="#top">02 — Manifest</a>
   <a href="#historia">03 — Historia</a>
   <a href="#galeria">04 — Galeria</a>
   <a href="#wizja">05 — Wizja</a>
@@ -50,47 +50,6 @@
     <a href="#wsparcie" class="btn btn-primary nav-cta"><span>Wesprzyj</span></a>
   </div>
 </nav>
-
-<header id="top" class="hero">
-  <div class="hero-bg">
-    <canvas id="oxygen-canvas" class="oxygen-canvas" aria-hidden="true"></canvas>
-    <div class="grid-overlay"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
-  <div class="container hero-content">
-    <span class="eyebrow">Fundacja Baromedical · od 2019</span>
-    <h1 class="hero-title">
-      Tam gdzie lekarze mówią <span class="strike">PASS</span><br/>
-      my mówimy <span class="accent">SPRAWDZAM</span>
-    </h1>
-    <p class="hero-sub">
-      Tlenoterapia hiperbaryczna ratuje życie tam, gdzie medycyna konwencjonalna
-      mówi „już nie da się nic zrobić”. Walczymy, by tlen ratował <em>wcześniej</em>,
-      nie za późno.
-    </p>
-    <div class="hero-cta">
-      <a href="#asystent" class="btn btn-primary btn-lg"><span>Porozmawiaj z Tlenią <span class="arrow">→</span></span></a>
-      <a href="#wsparcie" class="btn btn-ghost btn-lg"><span>Wesprzyj fundację</span></a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-num"><span data-counter="100" data-suffix="%">0%</span></span>
-        <span class="stat-label">Darowizn na cele statutowe</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num"><span data-counter="2019">0</span></span>
-        <span class="stat-label">Rok założenia</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num"><span data-counter="3" data-suffix="h">0h</span></span>
-        <span class="stat-label">Tyle dawano życia pacjentowi „0”</span>
-      </div>
-    </div>
-  </div>
-  <a href="#historia" class="scroll-cue" aria-label="Przewiń niżej">Scroll</a>
-</header>
 
 <section id="asystent" class="section-assistant" data-state="idle">
   <div class="container narrow">
@@ -146,6 +105,47 @@
     <audio id="assist-audio" autoplay></audio>
   </div>
 </section>
+
+<header id="top" class="hero">
+  <div class="hero-bg">
+    <canvas id="oxygen-canvas" class="oxygen-canvas" aria-hidden="true"></canvas>
+    <div class="grid-overlay"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="container hero-content">
+    <span class="eyebrow">Fundacja Baromedical · od 2019</span>
+    <h1 class="hero-title">
+      Tam gdzie lekarze mówią <span class="strike">PASS</span><br/>
+      my mówimy <span class="accent">SPRAWDZAM</span>
+    </h1>
+    <p class="hero-sub">
+      Tlenoterapia hiperbaryczna ratuje życie tam, gdzie medycyna konwencjonalna
+      mówi „już nie da się nic zrobić”. Walczymy, by tlen ratował <em>wcześniej</em>,
+      nie za późno.
+    </p>
+    <div class="hero-cta">
+      <a href="#historia" class="btn btn-primary btn-lg"><span>Poznaj historię <span class="arrow">→</span></span></a>
+      <a href="#wsparcie" class="btn btn-ghost btn-lg"><span>Wesprzyj fundację</span></a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num"><span data-counter="100" data-suffix="%">0%</span></span>
+        <span class="stat-label">Darowizn na cele statutowe</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num"><span data-counter="2019">0</span></span>
+        <span class="stat-label">Rok założenia</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num"><span data-counter="3" data-suffix="h">0h</span></span>
+        <span class="stat-label">Tyle dawano życia pacjentowi „0”</span>
+      </div>
+    </div>
+  </div>
+  <a href="#historia" class="scroll-cue" aria-label="Przewiń niżej">Scroll</a>
+</header>
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
@@ -340,7 +340,7 @@
   <div class="container footer-inner">
     <div>
       <a href="#top" class="logo logo-light">
-        <span class="logo-mark"><span>O₂</span></span>
+        <img src="/logo.png" alt="" class="logo-img" />
         <span class="logo-text">Baromedical</span>
       </a>
       <p class="footer-tag">Tlen dla życia.</p>

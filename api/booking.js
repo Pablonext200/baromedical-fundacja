@@ -33,6 +33,7 @@ module.exports = async function handler(req, res) {
   const telefon = normalizePhone(body.telefon);
   const email = sanitize(body.email, 120);
   const uwagi = sanitize(body.uwagi, 500);
+  const termin = sanitize(body.termin, 120);
 
   if (!imie || !nazwisko || !telefon) {
     return res.status(400).json({ ok: false, error: 'Brakuje wymaganych danych: imię, nazwisko, telefon.' });
@@ -47,6 +48,7 @@ module.exports = async function handler(req, res) {
     `Telefon: ${telefon}`,
   ];
   if (email) lines.push(`Email: ${email}`);
+  if (termin) lines.push(`Termin: ${termin}`);
   if (uwagi) lines.push(`Uwagi: ${uwagi}`);
   lines.push('', `Zgloszono: ${ts}`);
   const message = lines.join('\n');
@@ -68,13 +70,13 @@ module.exports = async function handler(req, res) {
 
   const waLink = `https://wa.me/${REGISTRATION_PHONE}?text=${encodeURIComponent(message)}`;
 
-  console.log('[BOOKING]', JSON.stringify({ imie, nazwisko, telefon, email, uwagi, waSent, waError, ts }));
+  console.log('[BOOKING]', JSON.stringify({ imie, nazwisko, telefon, email, termin, uwagi, waSent, waError, ts }));
 
   return res.status(200).json({
     ok: true,
     waSent,
     waLink,
-    summary: { imie, nazwisko, telefon, email, uwagi },
+    summary: { imie, nazwisko, telefon, email, termin, uwagi },
     ts,
   });
 };

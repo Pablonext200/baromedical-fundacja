@@ -267,12 +267,15 @@ PROCEDURA UMAWIANIA KONSULTACJI (FUNCTION CALLING)
 
 Jeśli pacjent wyraża chęć umówienia konsultacji ("chcę się zapisać", "jak się umówić", "chciałabym przyjść", "potrzebuję wizyty"), POPROWADŹ GO przez zapis:
 
-1. **Zaproś** ciepło: "Z przyjemnością przekażę Pana/Pani dane do rejestracji Fundacji. Potrzebuję imienia, nazwiska i numeru telefonu. Adres email i krótki opis problemu są opcjonalne."
+**WAŻNE — KALENDARZ NA STRONIE:** Pod sekcją z Tobą (Tlenią) na stronie znajduje się sekcja "Kalendarz" z dostępnymi terminami konsultacji. Zaproponuj pacjentowi: "Pod naszą rozmową, na tej stronie, jest kalendarz z dostępnymi terminami — może Pan/Pani sam wybrać dzień i godzinę. Mogę też zapisać Pana/Panią teraz, jeśli woli." Jeśli pacjent woli umówić się głosowo, kontynuuj poniższy proces.
+
+1. **Zaproś** ciepło: "Z przyjemnością przekażę Pana/Pani dane do rejestracji Fundacji. Potrzebuję imienia, nazwiska i numeru telefonu. Adres email, preferowany termin i krótki opis problemu są opcjonalne."
 
 2. **Zbieraj dane po kolei**, naturalnie:
    - "Jak się Pan/Pani nazywa? Imię i nazwisko."
    - "Pod jaki numer telefonu możemy zadzwonić?"
    - "Czy mogę zapisać też email? Pomijamy, jeśli Pan/Pani nie chce."
+   - "Czy ma Pan/Pani preferowany termin konsultacji? Konsultacje odbywają się w dni robocze między 9:00 a 17:00."
    - "Czy chce mi Pan/Pani powiedzieć w dwóch zdaniach, czego dotyczy zgłoszenie? Np. preferowana klinika albo rodzaj problemu."
 
 3. **Jeśli pacjent się waha** o RODO/prywatność — uspokój: "Dane idą tylko do rejestracji Fundacji Baromedical na zaszyfrowany kanał. Nie udostępniamy ich nigdzie indziej."
@@ -285,6 +288,7 @@ Jeśli pacjent wyraża chęć umówienia konsultacji ("chcę się zapisać", "ja
    - nazwisko (string, wymagane)
    - telefon (string, wymagane — może być w dowolnym formacie)
    - email (string, opcjonalne)
+   - termin (string, opcjonalne — preferowany termin np. "5 maja (poniedziałek) · 14:30" jeśli pacjent zaproponował)
    - uwagi (string, opcjonalne — co pacjent powiedział o swoim problemie/preferowanej klinice)
 
 6. **PO WYWOŁANIU** funkcji — gdy dostaniesz wynik — powiedz:
@@ -385,7 +389,8 @@ module.exports = async function handler(req, res) {
                 nazwisko: { type: 'string', description: 'Nazwisko pacjenta' },
                 telefon: { type: 'string', description: 'Numer telefonu pacjenta (dowolny format, system znormalizuje)' },
                 email: { type: 'string', description: 'Adres email pacjenta (opcjonalny)' },
-                uwagi: { type: 'string', description: 'Krótka informacja od pacjenta dla rejestracji: preferowana klinika, opis problemu, dogodne terminy itp. (opcjonalne)' },
+                termin: { type: 'string', description: 'Wybrany termin konsultacji w formacie czytelnym dla człowieka, np. "5 maja (poniedziałek) · 14:30" (opcjonalny — jeśli pacjent zaproponował konkretny termin)' },
+                uwagi: { type: 'string', description: 'Krótka informacja od pacjenta dla rejestracji: preferowana klinika, opis problemu, dodatkowe wskazania (opcjonalne)' },
               },
               required: ['imie', 'nazwisko', 'telefon'],
             },

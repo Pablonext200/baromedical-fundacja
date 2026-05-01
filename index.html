@@ -26,13 +26,14 @@
 
 <nav class="hud" aria-label="Sekcje">
   <a href="#asystent" class="active">01 — Tlenia</a>
-  <a href="#top">02 — Manifest</a>
-  <a href="#historia">03 — Historia</a>
-  <a href="#galeria">04 — Galeria</a>
-  <a href="#wizja">05 — Wizja</a>
-  <a href="#misja">06 — Misja</a>
-  <a href="#wsparcie">07 — Wsparcie</a>
-  <a href="#kontakt">08 — Kontakt</a>
+  <a href="#kalendarz">02 — Kalendarz</a>
+  <a href="#top">03 — Manifest</a>
+  <a href="#historia">04 — Historia</a>
+  <a href="#galeria">05 — Galeria</a>
+  <a href="#wizja">06 — Wizja</a>
+  <a href="#misja">07 — Misja</a>
+  <a href="#wsparcie">08 — Wsparcie</a>
+  <a href="#kontakt">09 — Kontakt</a>
 </nav>
 
 <nav class="nav">
@@ -71,7 +72,9 @@
     </p>
 
     <div id="assist-orb" class="assist-orb-big" aria-hidden="true">
-      <div class="assist-orb-core"></div>
+      <div class="assist-orb-logo">
+        <img src="/logo.png" alt="Tlenia" />
+      </div>
       <div class="assist-orb-ring r1"></div>
       <div class="assist-orb-ring r2"></div>
       <div class="assist-orb-ring r3"></div>
@@ -103,6 +106,39 @@
     </p>
 
     <audio id="assist-audio" autoplay></audio>
+  </div>
+</section>
+
+<section id="kalendarz" class="section section-calendar">
+  <div class="container narrow">
+    <span class="section-tag">Kalendarz · Bezpłatne konsultacje</span>
+    <h2>Wybierz <span class="accent">termin</span> rozmowy</h2>
+    <p class="cal-lead">
+      Konsultacje odbywają się telefonicznie lub online (30 min). Bez opłat.
+      Wybierz dzień i godzinę — odezwiemy się, by potwierdzić termin.
+    </p>
+
+    <div class="cal-wrap">
+      <div class="cal-days" id="cal-days" role="tablist" aria-label="Dni"></div>
+      <div class="cal-slots-head" id="cal-slots-head">Dostępne godziny</div>
+      <div class="cal-slots" id="cal-slots" role="listbox" aria-label="Godziny"></div>
+    </div>
+
+    <form class="cal-form" id="cal-form" hidden autocomplete="on">
+      <div class="cal-form-title">Termin: <strong id="cal-chosen-slot"></strong></div>
+      <div class="cal-form-row">
+        <input name="imie" placeholder="Imię" required autocomplete="given-name" />
+        <input name="nazwisko" placeholder="Nazwisko" required autocomplete="family-name" />
+      </div>
+      <div class="cal-form-row">
+        <input name="telefon" placeholder="Telefon" required type="tel" autocomplete="tel" />
+        <input name="email" placeholder="Email (opcjonalnie)" type="email" autocomplete="email" />
+      </div>
+      <textarea name="uwagi" placeholder="Uwagi (opcjonalnie) — np. krótki opis sytuacji, pytania" rows="3"></textarea>
+      <div class="cal-form-actions">
+        <button type="submit" class="btn btn-primary btn-lg"><span>Zarezerwuj termin</span></button>
+      </div>
+    </form>
   </div>
 </section>
 
@@ -380,6 +416,7 @@
 
 <script src="script.js" defer></script>
 <script src="assistant.js" defer></script>
+<script src="calendar.js" defer></script>
 <script type="module" src="oxygen.js"></script>
 </body>
 </html>

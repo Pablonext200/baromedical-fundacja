@@ -16,6 +16,8 @@
   let rafId = null;
   let micTrack = null;
   let muted = false;
+  let ringCtx = null;
+  let ringInterval = null;
 
   function setStatus(text, state) {
     status.textContent = text;
@@ -37,6 +39,7 @@
       setStatus('Łączę…', 'connecting');
       startBtn.disabled = true;
       transcript.innerHTML = '';
+      startRingTone();
 
       const tokenResp = await fetch('/api/realtime-token', { method: 'POST' });
       if (!tokenResp.ok) {
@@ -66,7 +69,10 @@
 
       dc = pc.createDataChannel('oai-events');
       dc.addEventListener('open', () => {
+        stopRingTone();
+        connectChime();
         setStatus('Słucham…', 'listening');
+        sendGreeting();
       });
       dc.addEventListener('message', (e) => {
         try {
@@ -95,6 +101,7 @@
       muteBtn.disabled = false;
     } catch (err) {
       console.error(err);
+      stopRingTone();
       setStatus('Błąd: ' + (err.message || 'spróbuj ponownie'), 'error');
       startBtn.disabled = false;
       endCall();
@@ -102,6 +109,7 @@
   }
 
   function endCall() {
+    stopRingTone();
     cancelAnimationFrame(rafId);
     if (dc) { try { dc.close(); } catch {} dc = null; }
     if (pc) { try { pc.close(); } catch {} pc = null; }
@@ -250,6 +258,78 @@
       el.dataset.state = 'error';
       el.innerHTML = `<div class="assist-booking-row"><span class="dot err"></span><strong>Nie udało się wysłać</strong></div><div class="assist-booking-meta">Proszę zadzwonić: <a href="tel:+48666688227">+48 666 688 227</a></div>${close}`;
     }
+  }
+
+  function startRingTone() {
+    if (ringCtx || ringInterval) return;
+    try {
+      ringCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const playRing = () => {
+        if (!ringCtx) return;
+        const t0 = ringCtx.currentTime;
+        [440, 480].forEach((freq) => {
+          const osc = ringCtx.createOscillator();
+          const g = ringCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          g.gain.setValueAtTime(0, t0);
+          g.gain.linearRampToValueAtTime(0.10, t0 + 0.04);
+          g.gain.linearRampToValueAtTime(0.10, t0 + 0.42);
+          g.gain.linearRampToValueAtTime(0, t0 + 0.5);
+          osc.connect(g); g.connect(ringCtx.destination);
+          osc.start(t0);
+          osc.stop(t0 + 0.55);
+        });
+      };
+      playRing();
+      ringInterval = setInterval(playRing, 1500);
+    } catch (e) {
+      console.warn('ring tone failed', e);
+    }
+  }
+
+  function stopRingTone() {
+    if (ringInterval) { clearInterval(ringInterval); ringInterval = null; }
+    if (ringCtx) { try { ringCtx.close(); } catch {} ringCtx = null; }
+  }
+
+  function connectChime() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const t0 = ctx.currentTime;
+      // Pleasant 3-note ascending arpeggio (C5, E5, G5)
+      [523.25, 659.25, 783.99].forEach((freq, i) => {
+        const start = t0 + i * 0.09;
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        g.gain.setValueAtTime(0, start);
+        g.gain.linearRampToValueAtTime(0.16, start + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.0001, start + 0.45);
+        osc.connect(g); g.connect(ctx.destination);
+        osc.start(start);
+        osc.stop(start + 0.5);
+      });
+      setTimeout(() => { try { ctx.close(); } catch {} }, 900);
+    } catch (e) {
+      console.warn('chime failed', e);
+    }
+  }
+
+  function sendGreeting() {
+    setTimeout(() => {
+      if (!dc || dc.readyState !== 'open') return;
+      try {
+        dc.send(JSON.stringify({
+          type: 'response.create',
+          response: {
+            modalities: ['audio', 'text'],
+            instructions: 'Przywitaj użytkownika TERAZ — krótko (2-3 zdania), ciepło i naturalnie. Powiedz: "Cześć, jestem Tlenia, doradczyni Fundacji Baromedical." Następnie jednym płynnym zdaniem wymień, w czym możesz pomóc — np. wskazania do tlenoterapii hiperbarycznej, jak działa terapia, kliniki w Polsce, umówienie konsultacji. Zakończ otwartym pytaniem, np. "O czym chciałbyś porozmawiać?" lub "W czym mogę dziś pomóc?". Mów płynnie, jak człowiek — bez wyliczania listy z numerami.'
+          }
+        }));
+      } catch (e) { console.error('greeting send', e); }
+    }, 280);
   }
 
   let aiBuffer = '';
